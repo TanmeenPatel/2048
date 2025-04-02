@@ -105,11 +105,53 @@ public class App extends PApplet {
 
     public void move(int direction) {
         // UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3
-        for (int y = 0; y < GRID_SIZE; y++) {
-            for (int x = 0; x < GRID_SIZE; x++) {
-                if (board[y][x].getValue() != 0) {
-                    board[y][x-1] = board[y][x];
+        int[] directions = new int[2];
+        if (direction == 0) {
+            directions = new int[]{-1,0};
+            System.out.println("UP");
+            for (int y = 1; y < GRID_SIZE; y++) {
+                for (int x = 0; x < GRID_SIZE; x++) {
+                    moveCell(x, y, directions);
                 }
+            }
+        }
+        else if (direction == 1) {
+            directions = new int[]{1,0};
+            System.out.println("DOWN");
+            for (int y = GRID_SIZE - 2; y >= 0; y--) {
+                for (int x = 0; x < GRID_SIZE; x++) {
+                    moveCell(x, y, directions);
+                }
+            }
+        }
+        else if (direction == 2) {
+            directions = new int[]{0,-1};
+            System.out.println("LEFT");
+            for (int y = 0; y < GRID_SIZE; y++) {
+                for (int x = 1; x < GRID_SIZE; x++) {
+                    moveCell(x, y, directions);
+                }
+            }
+        }
+        else if (direction == 3) {
+            directions = new int[]{0,1};
+            System.out.println("RIGHT");
+            for (int y = 0; y < GRID_SIZE; y++) {
+                for (int x = GRID_SIZE - 2; x >= 0; x--) {
+                    moveCell(x, y, directions);
+                }
+            }
+        }
+    }
+
+    public void moveCell(int x, int y, int[] directions) {
+        if (board[y][x].getValue() != 0) {
+            int newY = y + directions[0];
+            int newX = x + directions[1];
+
+            if (newX >= 0 && newX < GRID_SIZE && newY >=0 && newY < GRID_SIZE) {
+                board[newY][newX].setValue(board[y][x].getValue());
+                board[y][x].clearCell();
             }
         }
     }

@@ -17,6 +17,11 @@ public class Cell {
         return value;
     }
 
+    public void clearCell() {
+        value = 0;
+        colors = new int[3];
+    }
+
     public void setValue(int value) {
         this.value = value;
     }
